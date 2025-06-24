@@ -1,0 +1,22 @@
+# Ignore virtual environment
+venv/
+.venv
+# Ignore Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyc?
+
+# Ignore logs and temporary files
+*.log*
+*.tmp
+
+# Ignore IDE specific files
+.vscode/
+.idea/
+
+# Ignore environment files
+.env
+
+# PEP 582; used by e.g. github.com/David-OConnor/pyflow and github.com/pdm-project/pdm
+__pypackages__/
