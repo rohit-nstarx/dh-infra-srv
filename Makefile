@@ -1,7 +1,7 @@
 IMAGE := rohitnx/dh-monitor
 TAG ?= dev
 
-code-style: format lint
+style-code: format lint
 build-push: build push
 build-run: build run-container
 
@@ -21,7 +21,7 @@ lint:
 	black --check .
 
 run-app:
-	cd app && uvicorn main:app --reload --host 0.0.0.0 --port 8000
+	uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 
 build:
 	docker build -t $(IMAGE):$(TAG) .
@@ -29,6 +29,6 @@ build:
 push:
 	docker push $(IMAGE):$(TAG)
 
-run-container:
-	docker container prune
-	docker run -d -port 8001:8001 --name dh-etcd-wrapper $(IMAGE):$(TAG)
+compose: build
+	docker compose up
+

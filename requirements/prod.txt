@@ -1,3 +1,17 @@
 uvicorn
 fastapi
 python-dotenv
+httpx
+
+# LLM client
+ollama>=0.1.7
+
+# Embeddings
+openai>=1.0.0
+
+# Vector database
+weaviate-client>=4.0.0
+
+# Vector database
+weaviate-client>=4.0.0
+
