@@ -1,7 +1,7 @@
 import weaviate
 from weaviate.classes.query import MetadataQuery
 from typing import List
-from app.core.vectore_store.base import BaseVectorStore
+from app.core.vector_store.base import BaseVectorStore
 
 from app.config import env_var
 from app.core.logging import logger
@@ -17,13 +17,15 @@ class WeaviateVectorStore(BaseVectorStore):
     def is_ready(self) -> bool:
         return self.client.is_ready()
 
-    def search(self, query_embedding: List[float], collection_name: str, limit: int = 3):
+    def search(
+        self, query_embedding: List[float], collection_name: str, limit: int = 3
+    ):
         try:
             collection = self.client.collections.get(collection_name)
             results = collection.query.near_vector(
                 near_vector=query_embedding,
                 limit=limit,
-                return_metadata=MetadataQuery(distance=True)
+                return_metadata=MetadataQuery(distance=True),
             )
 
             return [

@@ -3,12 +3,18 @@ import asyncio
 # services
 from app.core.logging import logger
 from app.services.monitoring.base import Monitor, OllamaMonitor, WeaviateMonitor
+
+
 class MonitoringService:
     def __init__(self):
-        self.status = {}             
+        self.status = {}
         self.monitors = [
-            OllamaMonitor(url = "https://6656c1989f970b3b36c6624d.mockapi.io/api/v1/usrs"),
-            WeaviateMonitor(url = "https://6656c1989f970b3b36c6624d.mockapi.io/api/v1/gg"),
+            OllamaMonitor(
+                url="https://6656c1989f970b3b36c6624d.mockapi.io/api/v1/usrs"
+            ),
+            WeaviateMonitor(
+                url="https://6656c1989f970b3b36c6624d.mockapi.io/api/v1/gg"
+            ),
         ]
 
     async def start_monitoring(self):

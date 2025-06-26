@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import List, Any
 
+
 class BaseVectorStore(ABC):
     @abstractmethod
     def add_documents(self, documents: List[dict], collection_name: str) -> None:
@@ -8,7 +9,9 @@ class BaseVectorStore(ABC):
         pass
 
     @abstractmethod
-    def search(self, query_embedding: List[float], collection_name: str, limit: int = 3):
+    def search(
+        self, query_embedding: List[float], collection_name: str, limit: int = 3
+    ):
         """Search for similar vectors and return top results"""
         pass
 

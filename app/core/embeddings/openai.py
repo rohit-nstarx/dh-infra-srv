@@ -2,6 +2,7 @@ import openai
 from typing import List
 from app.core.embeddings.base import BaseEmbedding
 
+
 class OpenAIEmbedding(BaseEmbedding):
     def __init__(self, model: str = "text-embedding-ada-002"):
         self.model = model

@@ -2,6 +2,7 @@ import httpx
 from typing import List
 from app.core.embeddings.base import BaseEmbedding
 
+
 class TEIEmbedding(BaseEmbedding):
     def __init__(self, endpoint: str = "http://tei-svc:80/embed"):
         self.endpoint = endpoint

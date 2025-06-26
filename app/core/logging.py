@@ -2,6 +2,7 @@
 import logging
 import json
 
+
 class JsonFormatter(logging.Formatter):
     def format(self, record):
         log_record = {
@@ -14,6 +15,7 @@ class JsonFormatter(logging.Formatter):
             "message": record.getMessage(),
         }
         return json.dumps(log_record)
+
 
 def setup_logging():
     formatter = JsonFormatter()
@@ -35,4 +37,4 @@ def setup_logging():
     #     uvicorn_logger.addHandler(handler)
 
 
-logger = logging.getLogger("app")    
+logger = logging.getLogger("app")
