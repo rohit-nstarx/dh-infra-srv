@@ -7,13 +7,7 @@ llm_map = {
     "ollama": OllamaLLM,
 }
 
-embedding_map = {
-    "openai": OpenAIEmbedding,
-    "tei": TEIEmbedding
-}
+embedding_map = {"openai": OpenAIEmbedding, "tei": TEIEmbedding}
 
 
-vector_store_map = {
-    "weaviate": WeaviateVectorStore
-}
-
+vector_store_map = {"weaviate": WeaviateVectorStore}

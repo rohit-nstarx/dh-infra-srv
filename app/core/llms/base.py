@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import List
 
+
 class BaseLLM(ABC):
     def __init__(self):
         self.client = None
@@ -14,4 +15,3 @@ class BaseLLM(ABC):
     def get_available_models(self) -> List[str]:
         """Get list of available models for this provider"""
         pass
- 

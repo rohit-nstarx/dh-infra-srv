@@ -1,4 +1,12 @@
-from fastapi import APIRouter, Request, HTTPException, Depends, BackgroundTasks, UploadFile, File
+from fastapi import (
+    APIRouter,
+    Request,
+    HTTPException,
+    Depends,
+    BackgroundTasks,
+    UploadFile,
+    File,
+)
 from fastapi.responses import JSONResponse
 
 from app.config import env_var
@@ -39,4 +47,6 @@ def search_vector_store(payload: dict):
         # return vector_store.similarity_search(payload)
     except Exception as ex:
         logger.error(str(ex))
-        raise HTTPException(status_code=500, detail="Unable to perform similarity search")
+        raise HTTPException(
+            status_code=500, detail="Unable to perform similarity search"
+        )

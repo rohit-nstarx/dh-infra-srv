@@ -12,7 +12,7 @@ class EnvironmentVariables:
     # Logging
     LOG_LEVEL: str = os.getenv("LOG_LEVEL", "DEBUG")
 
-    ACTIVE_LLM: str = os.getenv("ACTIVE_LLM", None) # ollama, openai
+    ACTIVE_LLM: str = os.getenv("ACTIVE_LLM", None)  # ollama, openai
     ACTIVE_EMBEDDING: str = os.getenv("ACTIVE_EMBEDDING", None)
     ACTIVE_VECTOR_STORE: str = os.getenv("ACTIVE_VECTOR_STORE", None)
 
