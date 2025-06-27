@@ -7,8 +7,8 @@ class ServiceStatusStore:
 
     @classmethod
     async def set_status(cls, service_name: str, status: bool):
-        # async with cls._lock:
-        cls._status[service_name] = status
+        async with cls._lock:
+            cls._status[service_name] = status
 
     @classmethod
     async def get_status(cls, service_name: str) -> bool:
@@ -17,8 +17,8 @@ class ServiceStatusStore:
 
     @classmethod
     async def get_all_statuses(cls) -> Dict[str, bool]:
-        # async with cls._lock:
-        return dict(cls._status)  # return a copy
+        async with cls._lock:
+            return dict(cls._status)  # return a copy
 
     @classmethod
     async def is_everything_healthy(cls) -> bool:
