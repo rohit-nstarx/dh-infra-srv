@@ -8,11 +8,7 @@ from app.config import env_var
 from app.core.shared import ServiceStatusStore
 
 
-services = [
-    get_active_llm(),
-    get_active_embedding(),
-    get_active_vector_store()
-]
+services = [get_active_llm(), get_active_embedding(), get_active_vector_store()]
 
 
 async def initialization_check():
@@ -23,20 +19,20 @@ async def initialization_check():
     logger.info("Active Vector Store: %s", env_var.ACTIVE_VECTOR_STORE)
 
     for i in range(1, 10):
-        logger.info(f"Attempt {i}/9")    
+        logger.info(f"Attempt {i}/9")
         tasks = [service.is_ready() for service in services]
         results = await asyncio.gather(*tasks)
-        for service, result in zip(services, results):            
+        for service, result in zip(services, results):
             logger.info(f"{service.__class__.__name__}: {result}")
-            await ServiceStatusStore.set_status(service_name=service.__class__.__name__, status=result)
-        
+            await ServiceStatusStore.set_status(
+                service_name=service.__class__.__name__, status=result
+            )
+
         if all(results):
             logger.info("All services are ready.")
-            return        
-        
+            return
+
         logger.info(f"retrying after {i * WAIT_FOR} seconds...")
         await asyncio.sleep(i * WAIT_FOR)
-    
-    raise RuntimeError(f"Startup failed. Unhealthy services")
 
-    
+    raise RuntimeError(f"Startup failed. Unhealthy services")

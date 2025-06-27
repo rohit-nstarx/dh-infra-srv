@@ -6,6 +6,7 @@ embedding_map = {
     "tei": TEIEmbedding,
 }
 
+
 def get_active_embedding(name: str = env_var.ACTIVE_EMBEDDING):
     cls = embedding_map.get(name)
     if not cls:

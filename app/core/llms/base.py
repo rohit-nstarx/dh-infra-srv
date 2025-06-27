@@ -11,5 +11,3 @@ class BaseLLM(ABC):
     def query(self, prompt: str, **kwargs) -> str:
         """Send a query to the LLM and return the response"""
         pass
-
-    

@@ -1,6 +1,7 @@
 import os
 from app.core.logging import logger
 
+
 class EnvironmentVariables:
     # DH Services
     DH_ADMIN: str = os.getenv("DH_ADMIN", "103.160.145.247")
@@ -43,6 +44,7 @@ class EnvironmentVariables:
             if attr_name.endswith("_HEALTH_ENDPOINT"):
                 service_prefix = attr_name.removesuffix("_HEALTH_ENDPOINT")
                 self.monitored_services[service_prefix] = value
+
 
 # create instance
 env_var = EnvironmentVariables()

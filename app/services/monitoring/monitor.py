@@ -6,11 +6,12 @@ from app.config import env_var
 from app.core.logging import logger
 from app.core.shared import ServiceStatusStore
 
+
 class MonitoringService:
     def __init__(self):
         self.status = {}
 
-    async def _check_service_status(self, service_name:str, endpoint: str) -> bool:
+    async def _check_service_status(self, service_name: str, endpoint: str) -> bool:
         try:
             async with httpx.AsyncClient(timeout=5) as client:
                 response = await client.get(endpoint, timeout=5)
@@ -21,13 +22,15 @@ class MonitoringService:
             logger.error(f"{service_name} healthcheck failed: %s", str(e))
             return False
 
-
     async def start_monitoring(self):
         i = 1
         while True:
             logger.info(f"Monitoring service: RUN {i}")
             service_names = env_var.monitored_services.keys()
-            tasks = [self._check_service_status(service, endpoint) for service, endpoint in env_var.monitored_services.items()]
+            tasks = [
+                self._check_service_status(service, endpoint)
+                for service, endpoint in env_var.monitored_services.items()
+            ]
             results = await asyncio.gather(*tasks)
             for service, result in zip(service_names, results):
                 self.status[service] = result

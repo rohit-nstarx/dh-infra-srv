@@ -14,7 +14,7 @@ class WeaviateVectorStore(BaseVectorStore):
     def __init__(self):
         self.base_url = f"{env_var.WEAVIATE_HOST}:{env_var.WEAVIATE_PORT}"
         self.health_check_url = f"{self.base_url}/v1/.well-known/ready"
-    
+
     async def is_ready(self) -> bool:
         try:
             async with httpx.AsyncClient(timeout=5) as client:
@@ -26,14 +26,14 @@ class WeaviateVectorStore(BaseVectorStore):
             logger.debug("Weviate healh check url: %s", self.health_check_url)
             return False
 
-    def search_documents(
-        self, query: str, collection_name: str, limit: int = 3
-    ):
+    def search_documents(self, query: str, collection_name: str, limit: int = 3):
         try:
-            embedding: BaseEmbedding = get_active_embedding()           
-            query_embedding = embedding.embed(query)[0] # httpx.post(, json={"inputs": [query]}).json()[0]
+            embedding: BaseEmbedding = get_active_embedding()
+            query_embedding = embedding.embed(query)[
+                0
+            ]  # httpx.post(, json={"inputs": [query]}).json()[0]
 
-            print('embeddings done')
+            print("embeddings done")
             # Prepare GraphQL query for vector search
             graphql_query = {
                 "query": f"""
@@ -56,14 +56,14 @@ class WeaviateVectorStore(BaseVectorStore):
                 }}
                 """
             }
-            
+
             # Make HTTP request to GraphQL endpoint
             response = httpx.post(
                 f"{self.base_url}/v1/graphql",
                 json=graphql_query,
-                headers={"Content-Type": "application/json"}
+                headers={"Content-Type": "application/json"},
             )
-            
+
             print(f"GraphQL response status: {response.status_code}")
             result = response.json()
             return result

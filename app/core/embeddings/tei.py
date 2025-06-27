@@ -4,10 +4,11 @@ from app.core.embeddings.base import BaseEmbedding
 from app.config import env_var
 from app.core.logging import logger
 
+
 class TEIEmbedding(BaseEmbedding):
     def __init__(self):
         self.endpoint = f"{env_var.TEI_BASE_URL}:{env_var.TEI_PORT}"
-        self.health_check_url = f"{self.endpoint}/health"  
+        self.health_check_url = f"{self.endpoint}/health"
 
     def embed(self, texts: List[str]) -> List[List[float]]:
         response = httpx.post(self.endpoint, json={"inputs": texts}, timeout=10)
@@ -28,5 +29,3 @@ class TEIEmbedding(BaseEmbedding):
         except Exception as e:
             logger.error("TEI embedding healthcheck failed: %s", str(e))
             return False
-
-    

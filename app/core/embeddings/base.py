@@ -7,7 +7,7 @@ class BaseEmbedding(ABC):
     def embed(self, texts: List[str]) -> List[List[float]]:
         """Convert list of texts into list of embeddings"""
         pass
- 
+
     @abstractmethod
     def is_ready(self) -> bool:
         pass

@@ -16,6 +16,7 @@ from app.services.initialization import initialization_check
 
 setup_logging()
 
+
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     # Initialize
@@ -33,12 +34,14 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
         logger.error(str(ex))
         raise ex
 
+
 app = FastAPI(lifespan=lifespan)
 
 
 main_router = APIRouter(prefix="/api/v1")
 main_router.include_router(router)
 app.include_router(main_router)
+
 
 @app.get("/status")
 async def service_status():

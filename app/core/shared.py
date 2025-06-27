@@ -1,6 +1,7 @@
 from typing import Dict
 import asyncio
 
+
 class ServiceStatusStore:
     _status: Dict[str, bool] = {}
     _lock = asyncio.Lock()

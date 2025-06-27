@@ -16,11 +16,7 @@ class Monitor(ABC):
 
 class InitMonitor(Monitor):
     def __init__(self):
-        self.services = [
-            {'service': 'TEI Embedding'}
-        ]
+        self.services = [{"service": "TEI Embedding"}]
 
     async def start_monitoring(self):
         pass
-
-
