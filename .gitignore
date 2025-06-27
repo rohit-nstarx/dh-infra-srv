@@ -20,3 +20,7 @@ __pycache__/
 
 # PEP 582; used by e.g. github.com/David-OConnor/pyflow and github.com/pdm-project/pdm
 __pypackages__/
+
+start.sh
+Dockerfile_ollama
+docker-compose.yaml

@@ -15,7 +15,6 @@ from app.services.monitoring.manager import MonitoringService
 
 setup_logging()
 
-
 # load environment variables
 env_file = find_dotenv()
 if env_file:

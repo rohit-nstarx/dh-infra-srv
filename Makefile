@@ -29,6 +29,6 @@ build:
 push:
 	docker push $(IMAGE):$(TAG)
 
-compose: build
-	docker compose up
+compose: 
+	docker compose up -d
 

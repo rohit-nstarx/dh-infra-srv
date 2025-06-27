@@ -15,3 +15,8 @@ class BaseLLM(ABC):
     def get_available_models(self) -> List[str]:
         """Get list of available models for this provider"""
         pass
+
+    @abstractmethod
+    def is_ready(self) -> bool:
+        pass
+    
