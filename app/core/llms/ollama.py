@@ -10,21 +10,19 @@ class OllamaLLM(BaseLLM):
     def __init__(self):
         super().__init__()
         self.base_url = f"{env_var.OLLAMA_HOST}:{env_var.OLLAMA_PORT}"
-        self.status_url = f"{self.base_url}/api/status"
+        self.health_check_url = f"{self.base_url}/api/tags"
 
-    def is_ready(self) -> bool:
+    async def is_ready(self) -> bool:
         try:
-            response = httpx.get(self.status_url, timeout=5)
-            logger.debug("Ollama /status response: %s", response.text)
-            return response.status_code == 200
-        except Exception as e:
-            logger.error("Ollama health check failed (/status): %s", str(e))
+            async with httpx.AsyncClient(timeout=5) as client:
+                response = await client.get(self.health_check_url)
+                response.raise_for_status()
+                return response.status_code == 200
+        except Exception as e:            
+            logger.error("Ollama health check failed: %s", str(e))            
+            logger.debug(f"Ollama endpoint {self.health_check_url}")
             return False
-
-    def get_available_models(self) -> List[str]:
-        """Get list of available models for this provider"""
-        pass
-
+        
     def query(self, prompt: str, **kwargs) -> str:
             try:
                 response = httpx.post(

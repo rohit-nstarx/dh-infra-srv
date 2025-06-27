@@ -7,38 +7,30 @@ from app.core.vector_store.base import BaseVectorStore
 from app.core.embeddings.base import BaseEmbedding
 from app.config import env_var
 from app.core.logging import logger
-from app.core.factory.embeddings_mapping import get_embedding
+from app.core.factory.embeddings_mapping import get_active_embedding
 
 
 class WeaviateVectorStore(BaseVectorStore):
     def __init__(self):
-        print(env_var.WEAVIATE_HOST)
-        print(env_var.WEAVIATE_PORT)
-        self.base_url = f"http://{env_var.WEAVIATE_HOST}:{env_var.WEAVIATE_PORT}"
-        self.client = weaviate.connect_to_local(
-            host=env_var.WEAVIATE_HOST,
-            port=int(env_var.WEAVIATE_PORT),
-            skip_init_checks=True
-        )
-
-    def is_ready(self) -> bool:
+        self.base_url = f"{env_var.WEAVIATE_HOST}:{env_var.WEAVIATE_PORT}"
+        self.health_check_url = f"{self.base_url}/v1/.well-known/ready"
+    
+    async def is_ready(self) -> bool:
         try:
-            ready = self.client.is_ready()
-            logger.debug(f"Weaviate readiness: {ready}")
-            return ready
+            async with httpx.AsyncClient(timeout=5) as client:
+                response = await client.get(self.health_check_url)
+                response.raise_for_status()
+                return response.status_code == 200
         except Exception as e:
             logger.error(f"Weaviate readiness check failed: {e}")
+            logger.debug("Weviate healh check url: %s", self.health_check_url)
             return False
-
-    def add_documents(self, documents: List[dict], collection_name: str) -> None:
-        """Add documents to the vector store"""
-        pass
 
     def search_documents(
         self, query: str, collection_name: str, limit: int = 3
     ):
         try:
-            embedding: BaseEmbedding = get_embedding(env_var.ACTIVE_EMBEDDING)           
+            embedding: BaseEmbedding = get_active_embedding()           
             query_embedding = embedding.embed(query)[0] # httpx.post(, json={"inputs": [query]}).json()[0]
 
             print('embeddings done')

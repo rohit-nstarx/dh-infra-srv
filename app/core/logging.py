@@ -1,4 +1,5 @@
 # logger.py
+import os
 import logging
 import json
 
@@ -25,7 +26,7 @@ def setup_logging():
 
     # Your app logger
     app_logger = logging.getLogger("app")
-    app_logger.setLevel(logging.INFO)
+    app_logger.setLevel(level=os.environ.get("LOG_LEVEL", "INFO"))
     app_logger.addHandler(handler)
     app_logger.propagate = False
 
