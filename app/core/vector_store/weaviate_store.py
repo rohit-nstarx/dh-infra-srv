@@ -7,7 +7,7 @@ from app.core.vector_store.base import BaseVectorStore
 from app.core.embeddings.base import BaseEmbedding
 from app.config import env_var
 from app.core.logging import logger
-from app.core.mappings.embeddings_mapping import embedding_map
+from app.core.factory.embeddings_mapping import get_embedding
 
 
 class WeaviateVectorStore(BaseVectorStore):
@@ -38,7 +38,7 @@ class WeaviateVectorStore(BaseVectorStore):
         self, query: str, collection_name: str, limit: int = 3
     ):
         try:
-            embedding: BaseEmbedding = embedding_map[env_var.ACTIVE_EMBEDDING]            
+            embedding: BaseEmbedding = get_embedding(env_var.ACTIVE_EMBEDDING)           
             query_embedding = embedding.embed(query)[0] # httpx.post(, json={"inputs": [query]}).json()[0]
 
             print('embeddings done')

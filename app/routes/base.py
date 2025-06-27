@@ -15,9 +15,9 @@ from app.core.llms import BaseLLM
 from app.core.embeddings import BaseEmbedding
 from app.core.vector_store import BaseVectorStore
 from app.schema.base import SearchParameter, SearchResponse, DocumentResult, LLMQueryRequest, EmbedRequest
-from app.core.mappings.llm_mappings import llm_map
-from app.core.mappings.embeddings_mapping import embedding_map
-from app.core.mappings.vector_strore_mappings import vector_store_map
+from app.core.factory.llm_mappings import get_llm
+from app.core.factory.embeddings_mapping import get_embedding
+from app.core.factory.vector_strore_mappings import get_vector_store
 
 
 router = APIRouter(tags=["RAG"])
@@ -26,7 +26,7 @@ router = APIRouter(tags=["RAG"])
 @router.post("/llm/query")
 def query_llm(query_request: LLMQueryRequest):
     try:
-        llm: BaseLLM = llm_map[env_var.ACTIVE_LLM]
+        llm: BaseLLM = get_llm(env_var.ACTIVE_LLM)
         return llm.query(prompt=query_request.prompt)
     except Exception as ex:
         logger.error(str(ex))
@@ -36,7 +36,7 @@ def query_llm(query_request: LLMQueryRequest):
 @router.post("/embeddings/embed")
 def generate_embedding(embedding_request: EmbedRequest):
     try:
-        embedding: BaseEmbedding = embedding_map[env_var.ACTIVE_EMBEDDING]
+        embedding: BaseEmbedding = get_embedding(env_var.ACTIVE_EMBEDDING)
         return embedding.embed(texts=embedding_request.texts)
     except Exception as ex:
         logger.error(str(ex))
@@ -46,7 +46,7 @@ def generate_embedding(embedding_request: EmbedRequest):
 @router.post("/vector/search")
 def search_vector_store(param: SearchParameter) -> SearchResponse:
     try:
-        vector_store: BaseVectorStore = vector_store_map[env_var.ACTIVE_VECTOR_STORE]
+        vector_store: BaseVectorStore = get_vector_store(env_var.ACTIVE_VECTOR_STORE)
         raw_response = vector_store.search_documents(param.query, param.collection_name, param.limit)
         documents = raw_response["data"]["Get"]["Shi_hpe"]
 
