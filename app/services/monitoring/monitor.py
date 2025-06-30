@@ -5,7 +5,7 @@ import asyncio
 from app.config import env_var
 from app.core.logging import logger
 from app.core.shared import ServiceStatusStore
-
+from app.core.utils.http_client import AsyncHttpClient
 
 class MonitoringService:
     def __init__(self):
@@ -13,9 +13,8 @@ class MonitoringService:
 
     async def _check_service_status(self, service_name: str, endpoint: str) -> bool:
         try:
-            async with httpx.AsyncClient(timeout=5) as client:
-                response = await client.get(endpoint, timeout=5)
-                response.raise_for_status()
+            async with AsyncHttpClient() as client:
+                response = await client.get(endpoint)
                 return response.status_code == 200
 
         except Exception as e:
@@ -36,5 +35,5 @@ class MonitoringService:
                 self.status[service] = result
                 logger.info(f"{service}: {result}")
                 await ServiceStatusStore.set_status(service_name=service, status=result)
-            await asyncio.sleep(10)
+            await asyncio.sleep(env_var.SERVICE_HEALTH_CHECK_INTERVAL)
             i = i + 1

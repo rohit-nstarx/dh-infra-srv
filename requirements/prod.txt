@@ -2,6 +2,7 @@ uvicorn
 fastapi
 python-dotenv
 httpx
+tenacity
 
 # LLM client
 ollama>=0.1.7

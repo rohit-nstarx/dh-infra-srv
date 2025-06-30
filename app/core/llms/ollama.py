@@ -4,6 +4,7 @@ from typing import List
 from app.core.llms.base import BaseLLM
 from app.config import env_var
 from app.core.logging import logger
+from tenacity import retry, stop_after_attempt, wait_fixed
 
 
 class OllamaLLM(BaseLLM):
@@ -12,17 +13,7 @@ class OllamaLLM(BaseLLM):
         self.base_url = f"{env_var.OLLAMA_HOST}:{env_var.OLLAMA_PORT}"
         self.health_check_url = f"{self.base_url}/api/tags"
 
-    async def is_ready(self) -> bool:
-        try:
-            async with httpx.AsyncClient(timeout=5) as client:
-                response = await client.get(self.health_check_url)
-                response.raise_for_status()
-                return response.status_code == 200
-        except Exception as e:
-            logger.error("Ollama health check failed: %s", str(e))
-            logger.debug(f"Ollama endpoint {self.health_check_url}")
-            return False
-
+    @retry(stop=stop_after_attempt(env_var.RETRY_MAX_ATTEMPTS), wait=wait_fixed(env_var.RETRY_WAIT_SECONDS))
     def query(self, prompt: str, **kwargs) -> str:
         try:
             response = httpx.post(

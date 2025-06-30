@@ -1,16 +1,12 @@
 from abc import ABC, abstractmethod
-from typing import List, Any
+from app.core.utils.common import ReadinessMixin
+from typing import List
 
 
-class BaseVectorStore(ABC):
+class BaseVectorStore(ReadinessMixin, ABC):
     @abstractmethod
     def search_documents(
         self, query_embedding: List[float], collection_name: str, limit: int = 3
     ):
         """Search for similar vectors and return top results"""
-        pass
-
-    @abstractmethod
-    def is_ready(self) -> bool:
-        """Return True if vector store is healthy"""
         pass

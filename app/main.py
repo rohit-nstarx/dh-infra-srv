@@ -7,7 +7,7 @@ from typing import AsyncGenerator, Optional
 from contextlib import asynccontextmanager
 from fastapi import APIRouter
 from app.routes.base import router
-from app.core.shared import ServiceStatusStore
+from app.routes.services_router import services_router
 
 # services
 from app.core.logging import setup_logging, logger
@@ -35,14 +35,12 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
         raise ex
 
 
-app = FastAPI(lifespan=lifespan)
+app = FastAPI(lifespan=lifespan, title="DH Infra Service")
 
 
 main_router = APIRouter(prefix="/api/v1")
 main_router.include_router(router)
+main_router.include_router(services_router, prefix="/services")
 app.include_router(main_router)
 
 
-@app.get("/status")
-async def service_status():
-    return await ServiceStatusStore.get_all_statuses()

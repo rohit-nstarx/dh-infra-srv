@@ -19,7 +19,7 @@ class EnvironmentVariables:
     # LLMs
     OLLAMA_HOST: str = os.getenv("OLLAMA_HOST", "http://localhost")
     OLLAMA_PORT: str = os.getenv("OLLAMA_PORT", "9001")
-    OLLAMA_MODEL: str = os.getenv("OLLAMA_MODEL", "tinyllama")
+    OLLAMA_MODEL: str = os.getenv("OLLAMA_MODEL", "llama3.2:3b")
     OLLAMA_HEALTH_ENDPOINT: str = "http://localhost:9001/api/tags"
 
     # Embeddings
@@ -34,6 +34,11 @@ class EnvironmentVariables:
 
     # Logging and active configs
     LOG_LEVEL: str = os.getenv("LOG_LEVEL", "DEBUG")
+    HTTP_REQUEST_TIMEOUT: int = int(os.getenv("HTTP_REQUEST_TIMEOUT", "5"))
+    SERVICE_HEALTH_CHECK_INTERVAL: int = int(os.getenv("SERVICE_HEALTH_CHECK_INTERVAL", "10"))
+    RETRY_WAIT_SECONDS: int = int(os.getenv("RETRY_WAIT_SECONDS", "2"))
+    RETRY_MAX_ATTEMPTS: int = int(os.getenv("RETRY_MAX_ATTEMPTS", "3"))
+
     ACTIVE_LLM: str = os.getenv("ACTIVE_LLM", None)
     ACTIVE_EMBEDDING: str = os.getenv("ACTIVE_EMBEDDING", None)
     ACTIVE_VECTOR_STORE: str = os.getenv("ACTIVE_VECTOR_STORE", None)

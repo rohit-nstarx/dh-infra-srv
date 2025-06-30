@@ -5,7 +5,7 @@ from typing import Optional, List
 class SearchParameter(BaseModel):
     query: str
     collection_name: str
-    limit: Optional[int] = 10  # default if not provided
+    limit: Optional[int] = 3
 
 
 class DocumentResult(BaseModel):

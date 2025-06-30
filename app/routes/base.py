@@ -17,6 +17,7 @@ from app.schema.base import (
     DocumentResult,
     LLMQueryRequest,
     EmbedRequest,
+    LLMQueryResponse,
 )
 from app.core.factory.llm_mappings import get_active_llm
 from app.core.factory.embeddings_mapping import get_active_embedding
@@ -27,7 +28,7 @@ router = APIRouter(tags=["RAG"])
 
 
 @router.post("/llm/query")
-def query_llm(query_request: LLMQueryRequest):
+def query_llm(query_request: LLMQueryRequest) -> LLMQueryResponse:
     try:
         llm: BaseLLM = get_active_llm()
         return llm.query(prompt=query_request.prompt)
@@ -36,7 +37,7 @@ def query_llm(query_request: LLMQueryRequest):
         raise HTTPException(status_code=500, detail="Unable to query LLM")
 
 
-@router.post("/embeddings/embed")
+@router.post("/embedding/embed")
 def generate_embedding(embedding_request: EmbedRequest):
     try:
         embedding: BaseEmbedding = get_active_embedding()
@@ -47,13 +48,12 @@ def generate_embedding(embedding_request: EmbedRequest):
 
 
 @router.post("/vector/search")
-def search_vector_store(param: SearchParameter) -> SearchResponse:
+async def search_vector_store(param: SearchParameter) -> SearchResponse:
     try:
         vector_store: BaseVectorStore = get_active_vector_store()
-        raw_response = vector_store.search_documents(
+        documents = await vector_store.search_documents(
             param.query, param.collection_name, param.limit
         )
-        documents = raw_response["data"]["Get"]["Shi_hpe"]
 
         parsed = [
             DocumentResult(
@@ -66,7 +66,6 @@ def search_vector_store(param: SearchParameter) -> SearchResponse:
             for doc in documents
         ]
         response = SearchResponse(results=parsed)
-
         return response
     except Exception as ex:
         logger.error(str(ex))
