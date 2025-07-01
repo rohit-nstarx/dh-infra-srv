@@ -1,7 +1,7 @@
 import httpx
 import openai
 from typing import List
-from app.core.embeddings.base import BaseEmbedding
+from app.core.rag.embeddings.base import BaseEmbedding
 
 
 class OpenAIEmbedding(BaseEmbedding):

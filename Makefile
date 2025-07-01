@@ -32,3 +32,11 @@ push:
 compose: 
 	docker compose up -d
 
+postgres:
+	docker run --name postgres-local \
+  -e POSTGRES_USER=rohit \
+  -e POSTGRES_PASSWORD=secret \
+  -e POSTGRES_DB=mydb \
+  -p 5432:5432 \
+  -d postgres:16
+

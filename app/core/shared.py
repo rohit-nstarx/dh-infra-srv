@@ -19,14 +19,13 @@ class ServiceStatusStore:
     async def get_status(cls, service_name: str) -> bool:
         async with cls._lock:
             history = cls._status.get(service_name, deque(maxlen=cls._history_limit))
-            return list(history).count(True) >= 2
+            return len(history) == cls._history_limit and all(history)
 
     @classmethod
     async def get_all_statuses(cls) -> Dict[str, bool]:
-        print(cls._status)
         async with cls._lock:
             return {
-                name: (list(history).count(True) >= 2)
+                name: (len(history) == cls._history_limit and all(history))
                 for name, history in cls._status.items()
             }
 
@@ -34,6 +33,6 @@ class ServiceStatusStore:
     async def is_everything_healthy(cls) -> bool:
         async with cls._lock:
             return all(
-                list(history).count(True) >= 2
+                len(history) == cls._history_limit and all(history)
                 for history in cls._status.values()
             )

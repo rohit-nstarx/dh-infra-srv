@@ -8,9 +8,9 @@ from fastapi import (
     File,
 )
 from app.core.logging import logger
-from app.core.llms import BaseLLM
-from app.core.embeddings import BaseEmbedding
-from app.core.vector_store import BaseVectorStore
+from app.core.rag.llms import BaseLLM
+from app.core.rag.embeddings import BaseEmbedding
+from app.core.rag.vector_store import BaseVectorStore
 from app.schema.base import (
     SearchParameter,
     SearchResponse,
@@ -19,9 +19,9 @@ from app.schema.base import (
     EmbedRequest,
     LLMQueryResponse,
 )
-from app.core.factory.llm_mappings import get_active_llm
-from app.core.factory.embeddings_mapping import get_active_embedding
-from app.core.factory.vector_strore_mappings import get_active_vector_store
+from app.core.rag.factory.llm_mappings import get_active_llm
+from app.core.rag.factory.embeddings_mapping import get_active_embedding
+from app.core.rag.factory.vector_strore_mappings import get_active_vector_store
 
 
 router = APIRouter(tags=["RAG"])

@@ -3,11 +3,11 @@ import httpx
 import weaviate
 from weaviate.classes.query import MetadataQuery
 from typing import List
-from app.core.vector_store.base import BaseVectorStore
-from app.core.embeddings.base import BaseEmbedding
+from app.core.rag.vector_store.base import BaseVectorStore
+from app.core.rag.embeddings.base import BaseEmbedding
 from app.config import env_var
 from app.core.logging import logger
-from app.core.factory.embeddings_mapping import get_active_embedding
+from app.core.rag.factory.embeddings_mapping import get_active_embedding
 from app.core.utils.http_client import AsyncHttpClient
 from tenacity import retry, stop_after_attempt, wait_fixed
 

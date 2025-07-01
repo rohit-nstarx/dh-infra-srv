@@ -1,4 +1,4 @@
-from app.core.llms import OllamaLLM
+from app.core.rag.llms import OllamaLLM
 from app.config import env_var
 
 llm_map = {

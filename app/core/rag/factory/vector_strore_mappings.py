@@ -1,4 +1,4 @@
-from app.core.vector_store import WeaviateVectorStore
+from app.core.rag.vector_store import WeaviateVectorStore
 from app.config import env_var
 
 vector_store_map = {"weaviate": WeaviateVectorStore}

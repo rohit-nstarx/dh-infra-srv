@@ -14,3 +14,5 @@ openai>=1.0.0
 # Vector database
 weaviate-client>=4.0.0
 
+sqlalchemy 
+psycopg2-binary

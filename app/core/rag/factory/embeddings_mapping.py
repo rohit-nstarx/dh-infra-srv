@@ -1,4 +1,4 @@
-from app.core.embeddings import OpenAIEmbedding, TEIEmbedding
+from app.core.rag.embeddings import OpenAIEmbedding, TEIEmbedding
 from app.config import env_var
 
 embedding_map = {

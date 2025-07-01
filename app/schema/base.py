@@ -30,3 +30,7 @@ class LLMQueryResponse(BaseModel):
 
 class EmbedRequest(BaseModel):
     texts: list[str]
+
+class ConversationCreate(BaseModel):
+    user_query: str
+    llm_response: str

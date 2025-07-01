@@ -1,6 +1,6 @@
 import httpx
 from typing import List
-from app.core.embeddings.base import BaseEmbedding
+from app.core.rag.embeddings.base import BaseEmbedding
 from app.config import env_var
 from app.core.logging import logger
 from tenacity import retry, stop_after_attempt, wait_fixed

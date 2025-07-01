@@ -1,7 +1,7 @@
 import httpx
 import ollama
 from typing import List
-from app.core.llms.base import BaseLLM
+from app.core.rag.llms.base import BaseLLM
 from app.config import env_var
 from app.core.logging import logger
 from tenacity import retry, stop_after_attempt, wait_fixed
