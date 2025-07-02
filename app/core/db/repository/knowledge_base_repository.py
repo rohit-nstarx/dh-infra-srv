@@ -11,3 +11,7 @@ class KnowledgeBaseRepository:
                 .order_by(KnowledgeBaseModel.created_on.desc())
                 .first()
             )
+        
+    def fetch_all_knowledge_bases(self):
+        with get_db() as db:
+            return db.query(KnowledgeBaseModel).order_by(KnowledgeBaseModel.created_on.desc()).all()

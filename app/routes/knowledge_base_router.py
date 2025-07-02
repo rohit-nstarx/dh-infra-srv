@@ -11,10 +11,10 @@ knowlege_router = APIRouter()
 
 
 @knowlege_router.get("/knowledge-base")
-def fetch_latest_knowledge_base():
+def fetch_knowledge_bases():
     try:
         repo = KnowledgeBaseRepository()
-        knowledge = repo.fetch_latest_knowledge_base()
+        knowledge = repo.fetch_all_knowledge_bases()
         return {"data": knowledge}
     except Exception as ex:
         logger.error(str(ex))

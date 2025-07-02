@@ -33,7 +33,7 @@ def fetch_active_avatar():
         raise HTTPException(status_code=500, detail="Unable to fetch active avatar")
 
 
-@avatar_router.post("/avatars/set-active-avatar/{id: int}")
+@avatar_router.post("/avatars/set-active-avatar/{id}")
 def set_active_avatar(id: int):
     try:
         if repo.set_active_avatar(id):
@@ -43,7 +43,7 @@ def set_active_avatar(id: int):
         raise HTTPException(status_code=500, detail="Unable to set active avatar")
 
 
-@avatar_router.get("/avatars/{id: int}")
+@avatar_router.get("/avatars/{id}")
 def fetch_avatar_by_id(id: int):
     try:
         avatar = repo.fetch_avatar_by_id(id)

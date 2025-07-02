@@ -27,7 +27,7 @@ class LLMQueryRequest(BaseModel):
 class LLMQueryData(BaseModel):
     model: str
     response: str
-    created_at: str  # or str if you're not parsing datetime
+    created_at: str 
 
 class LLMQueryResponse(BaseModel):
     response: LLMQueryData
