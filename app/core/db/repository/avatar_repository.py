@@ -24,4 +24,16 @@ class AvatarRepository:
                 db.commit()
                 return True
             return False
+
+    def set_active_avatar(self, avatar_id: int):
+        with get_db() as db:
+            # Deactivate all avatars
+            db.query(AvatarModel).update({AvatarModel.is_active: False})
+
+            # Activate the selected avatar
+            updated = db.query(AvatarModel).filter(AvatarModel.id == avatar_id).update({AvatarModel.is_active: True})
+            
+            db.commit()
+            return updated > 0  # Returns True if an avatar was updated
+
     

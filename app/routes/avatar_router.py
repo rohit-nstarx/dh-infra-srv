@@ -30,6 +30,14 @@ def fetch_active_avatar():
         logger.error(str(ex))
         raise HTTPException(status_code=500, detail="Unable to fetch active avatar")
 
+@avatar_router.get("/avatars/set-active-avatar/{id: int}")
+def fetch_active_avatar(id: int):
+    try:        
+        if repo.set_active_avatar(id):
+            return {'message': "success"}
+    except Exception as ex:
+        logger.error(str(ex))
+        raise HTTPException(status_code=500, detail="Unable to set active avatar")
 
 @avatar_router.get("/avatars/{id: int}")
 def fetch_avatar_by_id(id: int):
