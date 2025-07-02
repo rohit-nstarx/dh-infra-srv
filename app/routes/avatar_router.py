@@ -33,8 +33,8 @@ def fetch_active_avatar():
         raise HTTPException(status_code=500, detail="Unable to fetch active avatar")
 
 
-@avatar_router.get("/avatars/set-active-avatar/{id: int}")
-def fetch_active_avatar(id: int):
+@avatar_router.post("/avatars/set-active-avatar/{id: int}")
+def set_active_avatar(id: int):
     try:
         if repo.set_active_avatar(id):
             return {"message": "success"}
