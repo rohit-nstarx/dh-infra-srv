@@ -7,6 +7,7 @@ from app.core.logging import logger
 from app.core.shared import ServiceStatusStore
 from app.core.utils.http_client import AsyncHttpClient
 
+
 class MonitoringService:
     def __init__(self):
         self.status = {}

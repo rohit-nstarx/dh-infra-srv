@@ -2,6 +2,7 @@ from sqlalchemy import Column, BigInteger, String, Text, DateTime
 from datetime import datetime
 from app.core.db.connections.postgres import Base
 
+
 class ConversationModel(Base):
     __tablename__ = "conversations"
 
@@ -15,7 +16,7 @@ class ConversationModel(Base):
             "id": self.id,
             "user_query": self.user_query,
             "llm_response": self.llm_response,
-            "created_on": self.created_on.isoformat()
+            "created_on": self.created_on.isoformat(),
         }
 
     def __repr__(self):

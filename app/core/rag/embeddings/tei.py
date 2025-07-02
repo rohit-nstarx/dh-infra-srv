@@ -11,7 +11,10 @@ class TEIEmbedding(BaseEmbedding):
         self.endpoint = f"{env_var.TEI_BASE_URL}:{env_var.TEI_PORT}"
         self.health_check_url = f"{self.endpoint}/health"
 
-    @retry(stop=stop_after_attempt(env_var.RETRY_MAX_ATTEMPTS), wait=wait_fixed(env_var.RETRY_WAIT_SECONDS))
+    @retry(
+        stop=stop_after_attempt(env_var.RETRY_MAX_ATTEMPTS),
+        wait=wait_fixed(env_var.RETRY_WAIT_SECONDS),
+    )
     def embed(self, texts: List[str]) -> List[List[float]]:
         response = httpx.post(self.endpoint, json={"inputs": texts}, timeout=10)
         logger.debug("status_code: %s", response.status_code)

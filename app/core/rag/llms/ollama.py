@@ -13,7 +13,10 @@ class OllamaLLM(BaseLLM):
         self.base_url = f"{env_var.OLLAMA_HOST}:{env_var.OLLAMA_PORT}"
         self.health_check_url = f"{self.base_url}/api/tags"
 
-    @retry(stop=stop_after_attempt(env_var.RETRY_MAX_ATTEMPTS), wait=wait_fixed(env_var.RETRY_WAIT_SECONDS))
+    @retry(
+        stop=stop_after_attempt(env_var.RETRY_MAX_ATTEMPTS),
+        wait=wait_fixed(env_var.RETRY_WAIT_SECONDS),
+    )
     def query(self, prompt: str, **kwargs) -> str:
         try:
             response = httpx.post(

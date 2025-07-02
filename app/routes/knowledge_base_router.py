@@ -15,8 +15,7 @@ def fetch_latest_knowledge_base():
     try:
         repo = KnowledgeBaseRepository()
         knowledge = repo.fetch_latest_knowledge_base()
-        return {'data': knowledge}
+        return {"data": knowledge}
     except Exception as ex:
         logger.error(str(ex))
         raise HTTPException(status_code=500, detail="Unable to fetch data")
-

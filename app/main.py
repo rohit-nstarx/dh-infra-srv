@@ -21,7 +21,6 @@ from app.services.monitoring.monitor import MonitoringService
 from app.services.startup_checker import initialization_check
 
 
-
 setup_logging()
 
 
@@ -62,5 +61,3 @@ data_router.include_router(conversation_router)
 main_router.include_router(data_router)
 main_router.include_router(services_router, prefix="/services")
 app.include_router(main_router)
-
-

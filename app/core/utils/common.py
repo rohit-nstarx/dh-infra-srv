@@ -3,6 +3,7 @@ from app.core.logging import logger
 from app.config import env_var
 from app.core.utils.http_client import AsyncHttpClient
 
+
 class ReadinessMixin:
     async def is_ready(self) -> bool:
         try:

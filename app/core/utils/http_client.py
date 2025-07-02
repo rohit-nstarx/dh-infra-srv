@@ -17,8 +17,12 @@ class AsyncHttpClient:
     async def __aexit__(self, exc_type, exc_val, exc_tb):
         await self.client.aclose()
 
-
-    async def get(self, url: str, params: Optional[Dict[str, Any]] = None, headers: Optional[Dict[str, str]] = None) -> Optional[httpx.Response]:
+    async def get(
+        self,
+        url: str,
+        params: Optional[Dict[str, Any]] = None,
+        headers: Optional[Dict[str, str]] = None,
+    ) -> Optional[httpx.Response]:
         try:
             async with httpx.AsyncClient(timeout=self.timeout) as client:
                 response = await client.get(url, params=params, headers=headers)
@@ -29,7 +33,13 @@ class AsyncHttpClient:
         except Exception as ex:
             raise ex
 
-    async def post(self, url: str, data: Optional[Any] = None, json: Optional[Any] = None, headers: Optional[Dict[str, str]] = None) -> Optional[httpx.Response]:
+    async def post(
+        self,
+        url: str,
+        data: Optional[Any] = None,
+        json: Optional[Any] = None,
+        headers: Optional[Dict[str, str]] = None,
+    ) -> Optional[httpx.Response]:
         try:
             async with httpx.AsyncClient(timeout=self.timeout) as client:
                 response = await client.post(url, data=data, json=json, headers=headers)
