@@ -23,10 +23,14 @@ class LLMQueryRequest(BaseModel):
     prompt: str
 
 
-class LLMQueryResponse(BaseModel):
+
+class LLMQueryData(BaseModel):
     model: str
     response: str
-    created_at: str  # or datetime if you're parsing it
+    created_at: str  # or str if you're not parsing datetime
+
+class LLMQueryResponse(BaseModel):
+    response: LLMQueryData
 
 
 class EmbedRequest(BaseModel):

@@ -31,7 +31,8 @@ router = APIRouter(tags=["RAG"])
 def query_llm(query_request: LLMQueryRequest) -> LLMQueryResponse:
     try:
         llm: BaseLLM = get_active_llm()
-        return llm.query(prompt=query_request.prompt)
+        result = llm.query(prompt=query_request.prompt)
+        return {"response": result}
     except Exception as ex:
         logger.error(str(ex))
         raise HTTPException(status_code=500, detail="Unable to query LLM")
@@ -41,7 +42,8 @@ def query_llm(query_request: LLMQueryRequest) -> LLMQueryResponse:
 def generate_embedding(embedding_request: EmbedRequest):
     try:
         embedding: BaseEmbedding = get_active_embedding()
-        return embedding.embed(texts=embedding_request.texts)
+        result = embedding.embed(texts=embedding_request.texts)
+        return {"embeddings": result}
     except Exception as ex:
         logger.error(str(ex))
         raise HTTPException(status_code=500, detail="Unable to generate embedding")
@@ -65,7 +67,7 @@ async def search_vector_store(param: SearchParameter) -> SearchResponse:
             )
             for doc in documents
         ]
-        response = SearchResponse(results=parsed)
+        response = SearchResponse(results=parsed)        
         return response
     except Exception as ex:
         logger.error(str(ex))
