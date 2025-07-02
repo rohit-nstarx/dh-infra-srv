@@ -2,7 +2,7 @@ import json
 import httpx
 import weaviate
 from weaviate.classes.query import MetadataQuery
-from typing import List
+from typing import List, Any
 from app.core.rag.vector_store.base import BaseVectorStore
 from app.core.rag.embeddings.base import BaseEmbedding
 from app.config import env_var
@@ -56,9 +56,9 @@ class WeaviateVectorStore(BaseVectorStore):
             return result
          
 
-    async def search_documents(self, query: str, collection_name: str, limit: int = 3):
+    async def search_documents(self, query: str, collection_name: str, query_embedding: List[List[Any]], limit: int = 3):
         try:
-            query_embedding = self._get_embeddings(query=query)
+            query_embedding = query_embedding[0]
             raw_response = await self._query_vector_store(collection_name=collection_name, query_embedding=query_embedding, limit=limit)
             documents = raw_response["data"]["Get"][collection_name]
             return documents

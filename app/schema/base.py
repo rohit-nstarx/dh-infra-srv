@@ -1,11 +1,12 @@
 from pydantic import BaseModel
-from typing import Optional, List
+from typing import Optional, List, Any
 
 
 class SearchParameter(BaseModel):
     query: str
     collection_name: str
     limit: Optional[int] = 3
+    query_embedding: List[List[Any]]
 
 
 class DocumentResult(BaseModel):

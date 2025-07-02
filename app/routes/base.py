@@ -52,7 +52,7 @@ async def search_vector_store(param: SearchParameter) -> SearchResponse:
     try:
         vector_store: BaseVectorStore = get_active_vector_store()
         documents = await vector_store.search_documents(
-            param.query, param.collection_name, param.limit
+            param.query, param.collection_name, param.query_embedding, param.limit 
         )
 
         parsed = [

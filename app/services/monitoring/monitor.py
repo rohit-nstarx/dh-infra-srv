@@ -15,9 +15,11 @@ class MonitoringService:
         try:
             async with AsyncHttpClient() as client:
                 response = await client.get(endpoint)
+                response.raise_for_status()
                 return response.status_code == 200
 
         except Exception as e:
+            logger.debug("endpoint : %s", endpoint)
             logger.error(f"{service_name} healthcheck failed: %s", str(e))
             return False
 
